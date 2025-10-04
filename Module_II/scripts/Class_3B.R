@@ -1,6 +1,6 @@
 # Microarray Preprocessing and Quality Control Pipeline
 # GSE79973 Analysis - AI & Omics Internship 2025 - Module II
-# Enhanced version with better error handling and organization
+# Updated version with corrected outlier detection
 
 # ======================
 # INITIALIZATION SECTION
@@ -218,6 +218,10 @@ filter_by_variance <- function(expression_data, cutoff = 0.5) {
 # Apply filtering pipeline
 intensity_filtered <- filter_low_intensity(normalized_matrix, 
                                            CONFIG$intensity_threshold)
+
+# ANSWER 1: Transcripts after intensity filtering
+message("=== ANSWER: Transcripts remaining after intensity filtering: ", nrow(intensity_filtered))
+
 final_filtered_data <- filter_by_variance(intensity_filtered, 
                                           CONFIG$variance_cutoff)
 
@@ -253,7 +257,7 @@ setup_sample_groups <- function(sample_metadata) {
 sample_groups <- setup_sample_groups(sample_info)
 
 # ======================
-# OUTLIER DETECTION
+# OUTLIER DETECTION (CORRECTED)
 # ======================
 
 detect_sample_outliers <- function(expression_data) {
@@ -265,16 +269,20 @@ detect_sample_outliers <- function(expression_data) {
   
   outlier_samples <- names(mean_distances)[mean_distances > outlier_threshold]
   
-  if (length(outlier_samples) > 0) {
-    message("Potential outliers detected: ", paste(outlier_samples, collapse = ", "))
-  } else {
-    message("No outlier samples detected")
-  }
-  
   return(outlier_samples)
 }
 
 outlier_samples <- detect_sample_outliers(final_filtered_data)
+
+# ANSWER 2: Outlier detection results
+if (length(outlier_samples) > 0) {
+  message("=== ANSWER: Outlier arrays detected after normalization: Yes")
+  message("=== ANSWER: Number of outliers flagged: ", length(outlier_samples))
+  message("=== ANSWER: Outlier samples: ", paste(outlier_samples, collapse = ", "))
+} else {
+  message("=== ANSWER: Outlier arrays detected after normalization: No")
+  message("=== ANSWER: Number of outliers flagged: 0")
+}
 
 # ======================
 # PROBE ANNOTATION
