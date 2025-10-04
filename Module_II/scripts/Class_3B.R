@@ -107,6 +107,30 @@ message("Missing values in sample source: ",
         sum(is.na(sample_info$source_name_ch1)))
 
 # ======================
+# GET EXACT COUNTS
+# ======================
+
+# Total samples
+total_samples <- ncol(expression_matrix)
+message("=== ANSWER: Total samples: ", total_samples)
+
+# Disease vs Normal counts
+if (!is.null(sample_info$source_name_ch1)) {
+  sample_types <- table(trimws(as.character(sample_info$source_name_ch1)))
+  disease_count <- sample_types["gastric adenocarcinoma"]
+  normal_count <- sample_types["gastric mucosa"]
+  
+  message("=== ANSWER: Disease samples: ", disease_count)
+  message("=== ANSWER: Normal samples: ", normal_count)
+} else {
+  message("=== ANSWER: Sample type information not available in source_name_ch1")
+}
+
+# Probes before filtering
+probes_before <- nrow(expression_matrix)
+message("=== ANSWER: Probes before filtering: ", probes_before)
+
+# ======================
 # RAW DATA PROCESSING
 # ======================
 
@@ -257,7 +281,7 @@ setup_sample_groups <- function(sample_metadata) {
 sample_groups <- setup_sample_groups(sample_info)
 
 # ======================
-# OUTLIER DETECTION (CORRECTED)
+# OUTLIER DETECTION
 # ======================
 
 detect_sample_outliers <- function(expression_data) {
