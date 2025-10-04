@@ -1,0 +1,22 @@
+MICROARRAY ANALYSIS SUMMARY REPORT
+===================================
+GEO Accession: GSE79973
+Analysis Date: 2025-10-04
+
+DATA DIMENSIONS:
+Original probes × samples: 54675 × 20
+Normalized data dimensions: 54675 × 20
+Final filtered probes: 25220
+
+QUALITY METRICS:
+Missing sample annotations: 0
+Outlier samples detected: 1
+
+FILTERING PARAMETERS:
+Intensity threshold: 3.5
+Variance cutoff: 0.5
+
+SAMPLE INFORMATION:
+Total samples: 20
+   Normal : 10
+   Cancer : 10
